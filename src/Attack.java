@@ -66,7 +66,11 @@ public class Attack implements Displayable {
 
         for (int i = environment.size() - 1; i >= 0; i--) { // Parcourir en ordre inverse
             SolidSprite s = environment.get(i);
+            System.out.println("atttack s");
+
             if (s.intersect(attackBounds)) {
+                System.out.println("remove attack ");
+
                 environment.remove(i);  // Supprime l'obstacle
                 return false;           // L'attaque ne peut pas continuer
             }

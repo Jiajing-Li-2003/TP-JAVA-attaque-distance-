@@ -86,11 +86,18 @@ public class DynamicSprite extends SolidSprite{
                         super.getHitBox().getWidth(), super.getHitBox().getHeight());
                 break;
         }
+        System.out.println(attackBounds);
+
 
         // Parcourir les obstacles pour vérifier les collisions
         for (int i = environment.size() - 1; i >= 0; i--) { // Parcourir en ordre inverse
             SolidSprite s = (SolidSprite) environment.get(i);
+            System.out.println("solidsprite");
+            System.out.println(s);
+
             if (s.intersect(attackBounds)) {
+                System.out.println("intersect");
+
                 environment.remove(i);  // Supprime l'obstacle
                 return false;           // Signale que l'attaque ne peut pas continuer
             }
@@ -117,7 +124,6 @@ public class DynamicSprite extends SolidSprite{
             attacks.add(new Attack(x, y, attackLength, attackHeight, spritesheet,frames,direction));
         }
     }
-
     public void updateAttacks(ArrayList<SolidSprite> environment) {
         for (int i = attacks.size() - 1; i >= 0; i--) {
             Attack attack = attacks.get(i);
@@ -127,6 +133,8 @@ public class DynamicSprite extends SolidSprite{
 
             // Vérifie si l'attaque rencontre un obstacle
             if (!attack.isActive() || !attack.isAttackPossible(environment)) {
+                System.out.println("remove");
+
                 attacks.remove(i); // Supprimer l'attaque si elle a terminé ou rencontré un obstacle
                 isAttacking = false; // Réinitialiser l'état d'attaque
             }
@@ -145,7 +153,10 @@ public class DynamicSprite extends SolidSprite{
         if (!isAttacking && isMovingPossible(environment)) {
             move();
         }
-        else if (isAttacking) {
+
+    }
+    public void removeObstacle(ArrayList<Sprite> environment){
+        if (isAttacking) {
             // Vérifiez si l'attaque peut se déplacer et supprimer les obstacles
             if (!isAttackPossible(environment)) {
                 System.out.println("L'attaque a rencontré un obstacle !");

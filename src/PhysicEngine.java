@@ -39,6 +39,9 @@ public class PhysicEngine implements Engine{
         for(DynamicSprite dynamicSprite : movingSpriteList){
             dynamicSprite.moveIfPossible(environment);
         }
+        for (DynamicSprite attack : movingSpriteList){
+            attack.removeObstacle(environment);
+        }
 
     }
 }
